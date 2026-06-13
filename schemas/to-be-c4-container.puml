@@ -1,0 +1,71 @@
+@startuml to-be-c4-container
+!include <C4/C4_Container>
+
+title Кинобездна — To-Be. Диаграмма контейнеров
+
+Person(viewer, "Зритель", "Смотрит контент")
+
+rectangle "Кинобездна" {
+
+  Container(web, "Web-приложение", "", "Для ноутбуков и ПК")
+  Container(mobile, "Мобильное приложение", "", "Для мобильных устройств")
+  Container(tv, "Smart TV", "", "Для телевизоров")
+
+  Container(gateway, "API Gateway (Proxy)", "", "Точка входа для API")
+
+  Container(identity, "Identity Service", "", "Авторизация")
+  Container(users, "Users Service", "", "Пользователи")
+  Container(movies, "Movies Service", "", "Фильмы")
+  Container(payments, "Payments Service", "", "Платежи")
+  Container(subs, "Subscriptions Service", "", "Подписки")
+  Container(loyalty_svc, "Loyalty Service", "", "Скидки и программа лояльности")
+  ContainerDb(db, "DB per service", "PostgreSQL", "Каждый сервис имеет свою изолированную БД")
+  ContainerQueue(kafka, "Kafka", "Apache Kafka", "События микросервисов")
+
+}
+
+System_Ext(recsys, "Рекомендательная система", "Сторонний сервис персональных подборок")
+System_Ext(paysys, "Платёжные системы", "Эквайринг и банковские карты")
+System_Ext(loyalty, "Сервисы лояльности", "Партнёрские бонусы и скидки")
+System_Ext(content, "Источники контента", "Сторонние сервисы и открытые источники")
+System_Ext(s3, "S3", "Хранилище медиаконтента и аватарок")
+
+Rel(viewer, web, "", "HTTPS")
+Rel(viewer, mobile, "", "HTTPS")
+Rel(viewer, tv, "", "HTTPS")
+
+Rel(web, gateway, "", "REST")
+Rel(mobile, gateway, "", "REST")
+Rel(tv, gateway, "", "REST")
+
+Rel(gateway, identity, "Авторизация", "gRPC")
+Rel(movies, recsys, "Запрашивает персональные подборки", "REST")
+
+
+Rel(users, db, "", "SQL")
+Rel(movies, db, "", "SQL")
+Rel(payments, db, "", "SQL")
+Rel(subs, db, "", "SQL")
+Rel(loyalty_svc, db, "", "SQL")
+
+Rel(gateway, kafka, "Запросы к микросервисам", "")
+Rel(movies, kafka, "События и ответы на запросы", "")
+Rel(subs, kafka, "Запросы к payments и loyalty, события", "")
+Rel(payments, kafka, "События и ответы на запросы", "")
+Rel(users, kafka, "user events", "")
+
+Rel(payments, paysys, "Проводит платежи", "REST")
+Rel(loyalty_svc, kafka, "Ответы на запросы", "")
+Rel(loyalty_svc, loyalty, "Синхронизирует бонусы с партнёрами", "REST")
+
+Rel(movies, s3, "Постеры, presigned URL", "HTTPS")
+Rel(users, s3, "Аватарки", "HTTPS")
+
+Rel(web, s3, "Видеопоток", "HTTPS")
+Rel(mobile, s3, "Видеопоток", "HTTPS")
+Rel(tv, s3, "Видеопоток", "HTTPS")
+Rel(web, content, "Видеопоток", "HTTPS")
+Rel(mobile, content, "Видеопоток", "HTTPS")
+Rel(tv, content, "Видеопоток", "HTTPS")
+
+@enduml
