@@ -424,6 +424,8 @@ You can see 21 for the upstream_rq_pending_overflow value which means 21 calls s
 ```
 
 Приложите скриншот работы circuit breaker'а
+![cb1](etc/step5/screen-1.png)
+![cb2](etc/step5/screen-2.png)
 
 Удаляем все
 ```bash
