@@ -5,7 +5,8 @@
 1. Спроектируйте to be архитектуру КиноБездны, разделив всю систему на отдельные домены и организовав интеграционное взаимодействие и единую точку вызова сервисов.
 Результат представьте в виде контейнерной диаграммы в нотации С4.
 Добавьте ссылку на файл в этот шаблон
-[ссылка на файл](ссылка)
+
+![To-Be C4 Container](schemas/png/to-be-c4-container.png)
 
 
 ## Задание 2
@@ -57,7 +58,10 @@
     - Добавьте в docker-compose новый сервис, kafka там уже есть
 
 Необходимые тесты для проверки этого API вызываются при запуске npm run test:local из папки tests/postman 
-Приложите скриншот тестов и скриншот состояния топиков Kafka http://localhost:8090 
+Приложите скриншот тестов и скриншот состояния топиков Kafka http://localhost:8090
+
+![postman](etc/step2/screen-postman.png)
+![kafka](etc/step2/screen-kafka.png)
 
 
 ## Задание 3
@@ -274,6 +278,8 @@ cat .docker/config.json | base64
 #### Шаг 3
 Добавьте сюда скриншота вывода при вызове https://cinemaabyss.example.com/api/movies и  скриншот вывода event-service после вызова тестов.
 
+![movies](etc/step3/screen-movies.png)
+![events](etc/step3/screen-events.png)
 
 ## Задание 4
 Для простоты дальнейшего обновления и развертывания вам как архитектуру необходимо так же реализовать helm-чарты для прокси-сервиса и проверить работу 
@@ -349,6 +355,10 @@ minikube tunnel
 https://cinemaabyss.example.com/api/movies
 и приложите скриншот развертывания helm и вывода https://cinemaabyss.example.com/api/movies
 
+![helm](etc/step4/screen-helm.png)
+![postman](etc/step4/screen-postman.png)
+![k9s](etc/step4/screen-k9s.png)
+
 
 # Задание 5
 Компания планирует активно развиваться и для повышения надежности, безопасности, реализации сетевых паттернов типа Circuit Breaker и канареечного деплоя вам как архитектору необходимо развернуть istio и настроить circuit breaker для monolith и movies сервисов.
@@ -414,6 +424,8 @@ You can see 21 for the upstream_rq_pending_overflow value which means 21 calls s
 ```
 
 Приложите скриншот работы circuit breaker'а
+![cb1](etc/step5/screen-1.png)
+![cb2](etc/step5/screen-2.png)
 
 Удаляем все
 ```bash
