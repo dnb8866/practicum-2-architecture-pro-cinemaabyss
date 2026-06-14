@@ -60,8 +60,8 @@
 Необходимые тесты для проверки этого API вызываются при запуске npm run test:local из папки tests/postman 
 Приложите скриншот тестов и скриншот состояния топиков Kafka http://localhost:8090
 
-![postman](etc/screen-postman.png)
-![kafka](etc/screen-kafka.png)
+![postman](etc/step2/screen-postman.png)
+![kafka](etc/step2/screen-kafka.png)
 
 
 ## Задание 3
@@ -278,6 +278,8 @@ cat .docker/config.json | base64
 #### Шаг 3
 Добавьте сюда скриншота вывода при вызове https://cinemaabyss.example.com/api/movies и  скриншот вывода event-service после вызова тестов.
 
+![movies](etc/step3/screen-movies.png)
+![events](etc/step3/screen-events.png)
 
 ## Задание 4
 Для простоты дальнейшего обновления и развертывания вам как архитектуру необходимо так же реализовать helm-чарты для прокси-сервиса и проверить работу 
